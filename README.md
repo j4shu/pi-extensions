@@ -1,23 +1,23 @@
 # pi-quicksave
 
-A [pi](https://pi.dev) extension. One shortcut, two jobs:
+A [pi](https://pi.dev) extension to quicksave prompt inputs. Like Claude's `Ctrl-s`, but better.
 
-| Composer state | Ctrl-s |
-| --- | --- |
-| Non-empty | Save the prompt to Quicksaved Prompts and clear the composer |
-| Empty | Open the picker |
+| Prompt Input | Ctrl-s                             |
+| ------------ | ---------------------------------- |
+| Non-empty    | Quicksave the current prompt       |
+| Empty        | Open the Quicksaved Prompts picker |
 
-The picker shows entries newest first; press Enter to fill one back.
+Picker keyboard shortcuts:
 
-| Key | Action |
-| --- | --- |
-| `up` / `down`, `ctrl+n` / `ctrl+p` | Move (wraps) |
-| `enter` | Fill the composer and close |
-| `ctrl+x` | Delete (Enter confirms) |
-| `ctrl+y` | Copy to clipboard |
-| `esc` | Close |
+| Key                                | Action                    |
+| ---------------------------------- | ------------------------- |
+| `up` / `down`, `ctrl+n` / `ctrl+p` | Move                      |
+| `enter`                            | Fill the prompt and close |
+| `ctrl+x`                           | Delete (Enter confirms)   |
+| `ctrl+y`                           | Copy to clipboard         |
+| `esc`                              | Close                     |
 
-Keyboard only, no slash commands.
+Note: The picker shows entries newest first.
 
 ## Install
 
@@ -25,20 +25,15 @@ Keyboard only, no slash commands.
 pi install npm:pi-quicksave
 ```
 
-From a checkout: `pi install /path/to/pi-quicksave`. For development, symlink
-the checkout into `~/.pi/agent/extensions/pi-quicksave` so `/reload` picks up
-changes.
-
 ## Storage
 
 Entries live in `~/.pi/agent/quicksave.json`, shared across sessions and
-projects: newest first, capped at 100 (oldest dropped with a notice),
-duplicates kept as separate entries.
+projects: newest first, capped at 100.
 
 ## Development
 
 ```sh
 npm install
-npm run check   # typecheck
+npm run check
 npm test
 ```
