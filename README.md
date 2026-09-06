@@ -33,8 +33,7 @@ confirmation needed.
 Quicksaved Prompts are stored in a plain JSON file at
 `~/.pi/agent/quicksave.json`, shared across all sessions and projects. Newest
 first, capped at 100 entries (oldest dropped, with a notice). Duplicate texts
-are stored as separate entries. See
-[`docs/adr/0001-quicksaved-prompts-storage.md`](docs/adr/0001-quicksaved-prompts-storage.md).
+are stored as separate entries.
 
 ## Install
 

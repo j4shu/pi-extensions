@@ -7,7 +7,7 @@ import { parseListFile, serializeList } from "./list.ts";
 
 /**
  * Quicksaved Prompts live in one global JSON file in the pi agent dir, shared
- * across sessions and projects (ADR-0001).
+ * across sessions and projects.
  */
 const FILE_NAME = "quicksave.json";
 

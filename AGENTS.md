@@ -6,15 +6,15 @@ A pi coding-agent extension: one keyboard shortcut quick-saves the composer text
 
 ### Issue tracker
 
-Issues live in GitHub Issues for this repo (`j4shu/pi-quicksave`, via the `gh` CLI). See `docs/agents/issue-tracker.md`.
+Issues live in GitHub Issues for this repo (`j4shu/pi-quicksave`, via the `gh` CLI).
 
 ### Triage labels
 
-Five canonical roles, each label string equal to its name: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
+Five canonical roles, each label string equal to its name: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`.
 
 ### Domain docs
 
-Single-context repo. The domain glossary is the `## Language` section of this file, so every pi session sees the vocabulary; architecture decisions live in `docs/adr/`. See `docs/agents/domain.md`.
+Single-context repo. The domain glossary is the `## Language` section of this file, so every pi session sees the vocabulary.
 
 ## Language
 
