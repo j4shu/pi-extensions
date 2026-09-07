@@ -1,6 +1,13 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
+    directory: "/pi-hud"
+    schedule:
+      interval: "weekly"
+    groups:
+      earendil-works:
+        patterns: ["@earendil-works/*"]
+  - package-ecosystem: "npm"
     directory: "/pi-quicksave"
     schedule:
       interval: "weekly"
