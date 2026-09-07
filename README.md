@@ -4,8 +4,8 @@ Monorepo of [pi](https://pi.dev) extensions by [j4shu](https://github.com/j4shu)
 
 | Package | npm | What it does |
 | ------- | --- | ------------ |
-| [`packages/quicksave`](packages/quicksave) | `pi install npm:@j4shu/pi-quicksave` | Ctrl-s to quicksave the prompt, or browse saved prompts in a picker |
-| [`packages/rename-session`](packages/rename-session) | `pi install npm:@j4shu/pi-rename-session` | Auto-name a new session from its first exchange |
+| [`quicksave`](quicksave) | `pi install npm:@j4shu/pi-quicksave` | Ctrl-s to quicksave the prompt, or browse saved prompts in a picker |
+| [`rename-session`](rename-session) | `pi install npm:@j4shu/pi-rename-session` | Auto-name a new session from its first exchange |
 
 ## Development
 
@@ -13,12 +13,12 @@ Each package is self-contained (own `package.json`, lockfile, tests). No root
 install or workspaces needed.
 
 ```sh
-npm ci --prefix packages/quicksave
-npm run check --prefix packages/quicksave
-npm test --prefix packages/quicksave
+npm ci --prefix quicksave
+npm run check --prefix quicksave
+npm test --prefix quicksave
 ```
 
-or `cd packages/<name>` and run `npm ci`, `npm run check`, `npm test`.
+or `cd <package>` and run `npm ci`, `npm run check`, `npm test`.
 
 ## Releasing
 

@@ -42,13 +42,13 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           package-manager-cache: false
       - name: Run checks
-        working-directory: packages/${{ github.event.inputs.package }}
+        working-directory: ${{ github.event.inputs.package }}
         run: |
           npm ci
           npm run check
           npm test
       - name: Bump version, commit, and tag
-        working-directory: packages/${{ github.event.inputs.package }}
+        working-directory: ${{ github.event.inputs.package }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -56,5 +56,5 @@ jobs:
           git push
           git push origin "v$(node -p 'require(\"./package.json\").version')"
       - name: Publish to npm
-        working-directory: packages/${{ github.event.inputs.package }}
+        working-directory: ${{ github.event.inputs.package }}
         run: npm publish
