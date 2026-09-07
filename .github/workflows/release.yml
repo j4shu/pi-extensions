@@ -3,6 +3,14 @@ name: release
 on:
   workflow_dispatch:
     inputs:
+      package:
+        description: "Package to release"
+        required: true
+        type: choice
+        default: quicksave
+        options:
+          - quicksave
+          - rename-session
       bump:
         description: "Version bump"
         required: true
@@ -33,21 +41,26 @@ jobs:
           node-version: "24"
           registry-url: "https://registry.npmjs.org"
           package-manager-cache: false
-      - run: npm ci
-      - run: npm run check
-      - run: npm test
+      - name: Run checks
+        working-directory: packages/${{ github.event.inputs.package }}
+        run: |
+          npm ci
+          npm run check
+          npm test
       - name: Bump version, commit, and tag
+        working-directory: packages/${{ github.event.inputs.package }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          npm version "${{ github.event.inputs.bump }}" -m "release: v%s"
+          npm version "${{ github.event.inputs.bump }}" -m "release: %s (${{ github.event.inputs.package }})"
           git push
-          git push origin "v$(node -p 'require("./package.json").version')"
+          git push origin "v$(node -p 'require(\"./package.json\").version')"
       - name: Publish to npm
+        working-directory: packages/${{ github.event.inputs.package }}
         run: npm publish
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          version="v$(node -p 'require("./package.json").version')"
+          version="v$(node -p 'require(\"./packages/${{ github.event.inputs.package }}/package.json\").version')"
           gh release create "$version" --title "$version" --generate-notes

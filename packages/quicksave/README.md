@@ -43,7 +43,5 @@ npm test
 Releases are manual so bugfixes can accumulate before publishing.
 
 1. Push the fixes to `main`.
-2. Run the `release` workflow: Actions tab > release > Run workflow, pick the bump
-   (`patch`, `minor`, or `major`).
-3. The workflow checks the code, bumps the version, tags it, publishes to npm via
-   trusted publishing, and creates a GitHub Release with generated notes.
+2. Run the `release` workflow in the monorepo (`j4shu/pi-extensions`): Actions tab > release > Run workflow, pick package `quicksave` and the bump (`patch`, `minor`, or `major`).
+3. The workflow checks the code, bumps the version, tags it, publishes to npm via trusted publishing, and creates a GitHub Release with generated notes.

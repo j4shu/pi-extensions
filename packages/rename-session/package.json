@@ -1,5 +1,5 @@
 {
-  "name": "pi-rename-session-dev",
+  "name": "pi-rename-session",
   "version": "0.1.0",
   "description": "Auto-name a new pi session once from its first exchange, using the current session model",
   "type": "module",
@@ -8,8 +8,9 @@
     "node": ">=22.6.0"
   },
   "scripts": {
-    "test": "node --test src/tests/",
-    "typecheck": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test src/tests/"
   },
   "pi": {
     "extensions": [
