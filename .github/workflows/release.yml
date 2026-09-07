@@ -11,6 +11,7 @@ on:
         options:
           - pi-quicksave
           - pi-rename-session
+          - pi-hud
 
 permissions:
   contents: read
