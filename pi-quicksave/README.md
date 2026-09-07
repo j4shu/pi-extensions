@@ -17,18 +17,13 @@ Picker keyboard shortcuts:
 | `ctrl+y`                           | Copy to clipboard         |
 | `esc`                              | Close                     |
 
-Note: The picker shows entries newest first.
+Picker entries live in `~/.pi/agent/quicksave.json` sorted by newest first and capped at 100.
 
 ## Install
 
 ```sh
 pi install npm:@j4shu/pi-quicksave
 ```
-
-## Storage
-
-Entries live in `~/.pi/agent/quicksave.json`, shared across sessions and
-projects: newest first, capped at 100.
 
 ## Development
 

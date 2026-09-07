@@ -1,7 +1,6 @@
 # pi-rename-session
 
-A [pi](https://pi.dev) extension that auto-names a new session from its first
-exchange.
+A [pi](https://pi.dev) extension that auto-names a new session from its first exchange.
 
 | Command                      | Action                               |
 | ---------------------------- | ------------------------------------ |
@@ -9,8 +8,7 @@ exchange.
 | `/rename-session on` / `off` | Toggle auto-naming                   |
 | `/rename-session status`     | Show enabled state, name, config     |
 
-Note: Auto-naming only fires on genuinely fresh sessions (no prior user messages,
-no existing name).
+Auto-naming only fires on new sessions.
 
 ## Config
 
@@ -28,10 +26,16 @@ no existing name).
 | `enabled` | Auto-naming on/off. Default `true`.                                       |
 | `model`   | Naming model override as `provider/id`. Default: the session's own model. |
 
+## Install
+
+```sh
+pi install npm:@j4shu/pi-rename-session
+```
+
 ## Development
 
 ```sh
 npm install
-npm run typecheck
+npm run check
 npm test
 ```
