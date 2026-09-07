@@ -1,7 +1,7 @@
 {
   "name": "@j4shu/pi-rename-session",
   "version": "0.0.0-development",
-  "description": "Auto-name a new pi session once from its first exchange.",
+  "description": "Auto-name a new pi session from its first exchange.",
   "type": "module",
   "keywords": [
     "pi-package",

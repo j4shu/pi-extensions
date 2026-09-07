@@ -1,7 +1,7 @@
 {
   "name": "@j4shu/pi-quicksave",
   "version": "0.0.0-development",
-  "description": "Quicksave your current prompt with Ctrl-s into a picker.",
+  "description": "Quicksave your current prompt into a picker.",
   "type": "module",
   "keywords": [
     "pi-package",
