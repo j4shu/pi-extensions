@@ -1,6 +1,6 @@
 {
 	"name": "@j4shu/pi-hud",
-	"version": "0.1.0",
+	"version": "0.0.0-development",
 	"description": "A minimal, monochrome heads-up band for pi: square-bordered prompt with a CLI caret, plus a one-row statusline (cwd, git, model, tokens)",
 	"type": "module",
 	"keywords": [
