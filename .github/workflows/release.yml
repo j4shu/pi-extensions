@@ -7,10 +7,10 @@ on:
         description: "Package to release"
         required: true
         type: choice
-        default: quicksave
+        default: pi-quicksave
         options:
-          - quicksave
-          - rename-session
+          - pi-quicksave
+          - pi-rename-session
       bump:
         description: "Version bump"
         required: true
