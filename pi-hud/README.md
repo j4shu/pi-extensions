@@ -2,7 +2,7 @@
 
 A minimal [pi](https://pi.dev) HUD.
 
-<img width="1197" height="117" alt="SCR-20260907-ngpe" src="https://github.com/user-attachments/assets/9d97b469-38a3-4d8f-9ed6-f22b909a06ea" />
+<img width="1202" height="159" alt="SCR-20260907-qout" src="https://github.com/user-attachments/assets/573c1aaa-85b0-433c-8431-7b17f7e18c20" />
 
 ## Install
 
