@@ -22,7 +22,7 @@ Note: The picker shows entries newest first.
 ## Install
 
 ```sh
-pi install npm:pi-quicksave
+pi install npm:@j4shu/pi-quicksave
 ```
 
 ## Storage

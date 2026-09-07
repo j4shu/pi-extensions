@@ -1,9 +1,24 @@
 {
-  "name": "pi-rename-session",
-  "version": "0.1.0",
+  "name": "@j4shu/pi-rename-session",
+  "version": "1.0.0",
   "description": "Auto-name a new pi session once from its first exchange, using the current session model",
   "type": "module",
-  "private": true,
+  "keywords": [
+    "pi-package",
+    "pi-extension"
+  ],
+  "license": "MIT",
+  "author": "j4shu",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/j4shu/pi-extensions.git"
+  },
+  "homepage": "https://github.com/j4shu/pi-extensions/tree/main/packages/rename-session",
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
   "engines": {
     "node": ">=22.6.0"
   },

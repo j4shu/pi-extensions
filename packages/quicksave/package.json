@@ -1,5 +1,5 @@
 {
-	"name": "pi-quicksave",
+	"name": "@j4shu/pi-quicksave",
 	"version": "0.1.1",
 	"description": "Quick-save your current prompt with Ctrl-s and browse, fill, copy, edit, and delete saved prompts from a picker",
 	"type": "module",
