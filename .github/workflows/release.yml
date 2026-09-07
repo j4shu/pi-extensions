@@ -50,4 +50,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           version="v$(node -p 'require("./package.json").version')"
-          gh release create "$version" --title "pi-quicksave $version" --generate-notes
+          gh release create "$version" --title "$version" --generate-notes
