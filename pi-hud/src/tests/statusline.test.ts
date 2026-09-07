@@ -21,39 +21,16 @@ test("shortenPath maps home and children to ~, leaves other paths alone", () => 
 	assert.equal(shortenPath("/opt/other", undefined), "/opt/other");
 });
 
-test("composeStatus joins both clusters on one row when they fit", () => {
-	const left = "~/git/pi-extensions · main";
-	const right = "codex:high · ↑1.2k ↓850";
-	const rows = composeStatus(left, right, 50);
-	assert.equal(rows.length, 1);
-	assert.equal(rows[0]!.length, 50);
-	assert.equal(rows[0]!, left + " ".repeat(50 - left.length - right.length) + right);
+test("composeStatus keeps content unchanged when it fits", () => {
+	assert.equal(composeStatus("12.3k ~/git/pi-extensions (main) codex:high", 100), "12.3k ~/git/pi-extensions (main) codex:high");
+	assert.equal(composeStatus("exact-fit", 9), "exact-fit");
 });
 
-test("composeStatus wraps to two rows when they do not fit, right cluster right-aligned", () => {
-	const rows = composeStatus("~/git/pi-extensions · main", "codex:high · ↑1.2k ↓850", 30);
-	assert.equal(rows.length, 2);
-	assert.equal(rows[0], "~/git/pi-extensions · main");
-	assert.equal(rows[1]!.length, 30);
-	assert.equal(rows[1]!.startsWith(" "), true);
-	assert.equal(rows[1]!.endsWith("codex:high · ↑1.2k ↓850"), true);
-});
-
-test("composeStatus truncates a cluster wider than the terminal instead of overflowing", () => {
-	const two = composeStatus("a-very-long-left-cluster", "right", 10);
-	assert.equal(two.length, 2);
-	assert.equal(two[0]!.length, 10);
-	assert.equal(two[0]!.endsWith("…"), true);
-	assert.equal(two[1]!.length, 10);
-	assert.equal(two[1]!.endsWith("right"), true);
-
-	const rightOnly = composeStatus("", "right-cluster-that-is-long", 10);
-	assert.equal(rightOnly.length, 1);
-	assert.equal(rightOnly[0]!.length, 10);
-	assert.equal(rightOnly[0]!.startsWith("…"), true);
+test("composeStatus truncates at the tail with an ellipsis when too wide", () => {
+	assert.equal(composeStatus("12.3k ~/git/pi-extensions (main) codex:high", 20), "12.3k ~/git/pi-exte…");
+	assert.equal(composeStatus("ab", 1), "…");
 });
 
 test("composeStatus degrades gracefully on degenerate widths", () => {
-	assert.deepEqual(composeStatus("a", "b", 0), []);
-	assert.deepEqual(composeStatus("a", "b", 1), ["a", "b"]);
+	assert.equal(composeStatus("anything", 0), "");
 });
