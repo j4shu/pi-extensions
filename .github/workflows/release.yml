@@ -4,25 +4,16 @@ on:
   workflow_dispatch:
     inputs:
       package:
-        description: "Package to release"
+        description: "Package to publish"
         required: true
         type: choice
         default: pi-quicksave
         options:
           - pi-quicksave
           - pi-rename-session
-      bump:
-        description: "Version bump"
-        required: true
-        type: choice
-        default: patch
-        options:
-          - patch
-          - minor
-          - major
 
 permissions:
-  contents: write
+  contents: read
   id-token: write
 
 concurrency:
@@ -30,12 +21,10 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  release:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
@@ -47,14 +36,6 @@ jobs:
           npm ci
           npm run check
           npm test
-      - name: Bump version, commit, and tag
-        working-directory: ${{ github.event.inputs.package }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          npm version "${{ github.event.inputs.bump }}" -m "release: %s (${{ github.event.inputs.package }})"
-          git push
-          git push origin "v$(node -p 'require(\"./package.json\").version')"
       - name: Publish to npm
         working-directory: ${{ github.event.inputs.package }}
         run: npm publish
