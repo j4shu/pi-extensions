@@ -1,6 +1,6 @@
 # pi-extensions
 
-Monorepo of [pi](https://pi.dev) extensions by [j4shu](https://github.com/j4shu).
+My [pi](https://pi.dev) extensions.
 
 | Package | npm | What it does |
 | ------- | --- | ------------ |
