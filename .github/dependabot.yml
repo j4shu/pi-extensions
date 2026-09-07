@@ -1,21 +1,10 @@
 version: 2
 updates:
+  # One glob entry covers every package dir; new pi-* extensions are
+  # picked up automatically (each dir keeps its own package-lock.json).
   - package-ecosystem: "npm"
-    directory: "/pi-hud"
-    schedule:
-      interval: "weekly"
-    groups:
-      earendil-works:
-        patterns: ["@earendil-works/*"]
-  - package-ecosystem: "npm"
-    directory: "/pi-quicksave"
-    schedule:
-      interval: "weekly"
-    groups:
-      earendil-works:
-        patterns: ["@earendil-works/*"]
-  - package-ecosystem: "npm"
-    directory: "/pi-rename-session"
+    directories:
+      - "/pi-*"
     schedule:
       interval: "weekly"
     groups:
