@@ -53,7 +53,8 @@ jobs:
           name="$(node -p 'require("./package.json").name')"
           cur="$(npm view "$name" version 2>/dev/null || true)"
           if [ -n "$cur" ]; then
-            npm version "$cur" --no-git-tag-version
+            # npm version errors on a no-op, so only realign when main drifted.
+            [ "$cur" != "$(node -p 'require("./package.json").version')" ] && npm version "$cur" --no-git-tag-version
             npm version ${{ github.event.inputs.bump }} --no-git-tag-version
           else
             echo "Not on the registry yet; publishing local version $(node -p 'require("./package.json").version') as-is"
