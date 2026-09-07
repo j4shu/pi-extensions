@@ -13,10 +13,11 @@
 // one-column gutter between rail and text. The session name hangs off the
 // top border's right side.
 //
-// The statusline row sits in the footer slot: session-cumulative token total,
-// then cwd with its git branch glued on in parentheses on the left; model +
-// thinking level on the right. The whole statusline is dim, like pi's own
-// footer text. It wraps to a second row when the terminal is too narrow.
+// The statusline row sits in the footer slot: session-cumulative token total
+// and the model + thinking level together, then a ·-separated cwd with its
+// git branch in parentheses. The whole row is dim, like pi's own footer
+// text. It truncates at the tail when the terminal is too narrow, so the
+// path (never the model segment) is the first to go.
 
 import {
 	CustomEditor,
@@ -169,18 +170,16 @@ function makeState(pi: ExtensionAPI, ctx: ExtensionContext): SessionState {
 				requestRender = () => {};
 			},
 			render(width: number): string[] {
-				// Compose plain text first, dim after layout
+				// Compose plain text first, dim after truncation
 				let cwdAndGit = shortenPath(ctx.cwd, HOME);
 				if (branch) cwdAndGit += ` (${branch})`;
 
 				const model = ctx.model ? ctx.model.id : "no model";
 				const thinking = pi.getThinkingLevel();
-				const right = `${model}${thinking !== "off" ? `:${thinking}` : ""}`;
-				return composeStatus(
-					[formatCount(tokenTotal), cwdAndGit].join(" "),
-					right,
-					width,
-				).map((row) => (row === "" ? row : theme.fg("dim", row)));
+				const modelSegment = `${model}${thinking !== "off" ? `:${thinking}` : ""}`;
+				const content = `${formatCount(tokenTotal)} ${modelSegment} · ${cwdAndGit}`;
+				const row = composeStatus(content, width);
+				return row === "" ? [] : [theme.fg("dim", row)];
 			},
 		};
 	});
