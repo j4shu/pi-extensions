@@ -24,8 +24,8 @@ or `cd packages/<name>` and run `npm ci`, `npm run check`, `npm test`.
 
 Manual, per package, from the Actions tab: run the `release` workflow and pick
 the package (`quicksave` or `rename-session`) and bump. The workflow checks,
-bumps the version, tags it `vX.Y.Z`, publishes to npm via trusted publishing,
-and creates a GitHub Release.
+bumps the version, tags it `vX.Y.Z`, and publishes to npm via trusted
+publishing.
 
 Note: separate packages keep separate npm identities, so versions and tags are
 independent. Both publish under the `@j4shu/` scope. The old unscoped

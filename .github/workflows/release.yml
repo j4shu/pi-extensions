@@ -58,9 +58,3 @@ jobs:
       - name: Publish to npm
         working-directory: packages/${{ github.event.inputs.package }}
         run: npm publish
-      - name: Create GitHub Release
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          version="v$(node -p 'require(\"./packages/${{ github.event.inputs.package }}/package.json\").version')"
-          gh release create "$version" --title "$version" --generate-notes
