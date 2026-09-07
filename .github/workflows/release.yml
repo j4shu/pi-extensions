@@ -4,14 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       package:
-        description: "Package to publish"
+        description: "Package to publish, or all"
         required: true
         type: choice
         default: pi-quicksave
         options:
+          - all
+          - pi-hud
           - pi-quicksave
           - pi-rename-session
-          - pi-hud
       bump:
         description: "Semver bump from the latest published version"
         required: false
@@ -32,30 +33,41 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    env:
+      # Space-separated packages to release; "all" expands to every package.
+      PKGS: ${{ github.event.inputs.package == 'all' && 'pi-hud pi-quicksave pi-rename-session' || github.event.inputs.package }}
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
       - name: Run checks
-        working-directory: ${{ github.event.inputs.package }}
         run: |
-          npm ci
-          npm run check
-          npm test
+          for pkg in $PKGS; do
+            echo "==> $pkg"
+            (cd "$pkg" && npm ci && npm run check && npm test)
+          done
       - name: Bump version (anchored to registry)
-        working-directory: ${{ github.event.inputs.package }}
         run: |
-          name="$(node -p 'require("./package.json").name')"
-          cur="$(npm view "$name" version 2>/dev/null || true)"
-          if [ -n "$cur" ]; then
-            # npm version errors on a no-op, so only realign when main drifted.
-            [ "$cur" != "$(node -p 'require("./package.json").version')" ] && npm version "$cur" --no-git-tag-version
-            npm version ${{ github.event.inputs.bump }} --no-git-tag-version
-          else
-            echo "Not on the registry yet; give the package an initial version before publishing"
-            exit 1
-          fi
+          for pkg in $PKGS; do
+            echo "==> $pkg"
+            (
+              cd "$pkg"
+              name="$(node -p 'require("./package.json").name')"
+              cur="$(npm view "$name" version 2>/dev/null || true)"
+              if [ -n "$cur" ]; then
+                # npm version errors on a no-op, so only realign when main drifted.
+                [ "$cur" != "$(node -p 'require("./package.json").version')" ] && npm version "$cur" --no-git-tag-version
+                npm version ${{ github.event.inputs.bump }} --no-git-tag-version
+              else
+                echo "Not on the registry yet; give the package an initial version before publishing"
+                exit 1
+              fi
+            )
+          done
       - name: Publish to npm
-        working-directory: ${{ github.event.inputs.package }}
-        run: npm publish --provenance --access public
+        run: |
+          for pkg in $PKGS; do
+            echo "==> $pkg"
+            (cd "$pkg" && npm publish --provenance --access public)
+          done
