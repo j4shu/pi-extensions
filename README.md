@@ -6,35 +6,3 @@ Monorepo of [pi](https://pi.dev) extensions by [j4shu](https://github.com/j4shu)
 | ------- | --- | ------------ |
 | [`pi-quicksave`](pi-quicksave) | `pi install npm:@j4shu/pi-quicksave` | Ctrl-s to quicksave the prompt, or browse saved prompts in a picker |
 | [`pi-rename-session`](pi-rename-session) | `pi install npm:@j4shu/pi-rename-session` | Auto-name a new session from its first exchange |
-
-## Development
-
-Each package is self-contained (own `package.json`, lockfile, tests). No root
-install or workspaces needed.
-
-```sh
-npm ci --prefix pi-quicksave
-npm run check --prefix pi-quicksave
-npm test --prefix pi-quicksave
-```
-
-or `cd <package>` and run `npm ci`, `npm run check`, `npm test`.
-
-## Releasing
-
-Manual, per package, from the Actions tab: run the `release` workflow and pick
-the package (`quicksave` or `rename-session`) and bump. The workflow checks,
-bumps the version, tags it `vX.Y.Z`, and publishes to npm via trusted
-publishing.
-
-Note: separate packages keep separate npm identities, so versions and tags are
-independent. Both publish under the `@j4shu/` scope. The old unscoped
-`pi-quicksave` package is deprecated: existing installs keep working but get no
-updates, so install the scoped package instead.
-
-> First publish of each new scoped package runs from a machine logged into npm
-> (`npm adduser`); the workflow's trusted publishing only works once the
-> package exists.
-
-> `rename-session` starts at `1.0.0` so its tags never collide with quicksave's
-> existing `v0.1.x` tags in this repo's shared tag namespace.
