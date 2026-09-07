@@ -1,0 +1,26 @@
+{
+  "name": "pi-rename-session-dev",
+  "version": "0.1.0",
+  "description": "Auto-name a new pi session once from its first exchange, using the current session model",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22.6.0"
+  },
+  "scripts": {
+    "test": "node --test src/tests/",
+    "typecheck": "tsc --noEmit"
+  },
+  "pi": {
+    "extensions": [
+      "./src/index.ts"
+    ]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
+  },
+  "devDependencies": {
+    "@earendil-works/pi-coding-agent": "^0.85.1",
+    "@types/node": "^26.0.0"
+  }
+}
