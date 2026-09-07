@@ -1,41 +1,41 @@
 {
-	"name": "@j4shu/pi-quicksave",
-	"version": "0.0.0-development",
-	"description": "Quick-save your current prompt with Ctrl-s and browse, fill, copy, edit, and delete saved prompts from a picker",
-	"type": "module",
-	"keywords": [
-		"pi-package",
-		"pi-extension"
-	],
-	"license": "MIT",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/j4shu/pi-extensions.git"
-	},
-	"author": "j4shu",
-	"homepage": "https://github.com/j4shu/pi-extensions/tree/main/pi-quicksave",
-	"files": [
-		"src",
-		"README.md",
-		"LICENSE"
-	],
-	"pi": {
-		"extensions": [
-			"./src/index.ts"
-		]
-	},
-	"scripts": {
-		"check": "tsc",
-		"test": "node --test src/tests/list.test.ts"
-	},
-	"peerDependencies": {
-		"@earendil-works/pi-coding-agent": ">=0.85.0",
-		"@earendil-works/pi-tui": ">=0.85.0"
-	},
-	"devDependencies": {
-		"@earendil-works/pi-coding-agent": "^0.85.1",
-		"@earendil-works/pi-tui": "^0.85.1",
-		"@types/node": "^26.4.1",
-		"typescript": "^7.0.2"
-	}
+  "name": "@j4shu/pi-quicksave",
+  "version": "0.0.0-development",
+  "description": "Quicksave your current prompt with Ctrl-s into a picker.",
+  "type": "module",
+  "keywords": [
+    "pi-package",
+    "pi-extension"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/j4shu/pi-extensions.git"
+  },
+  "author": "j4shu",
+  "homepage": "https://github.com/j4shu/pi-extensions/tree/main/pi-quicksave",
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "pi": {
+    "extensions": [
+      "./src/index.ts"
+    ]
+  },
+  "scripts": {
+    "check": "tsc",
+    "test": "node --test src/tests/list.test.ts"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": ">=0.85.0",
+    "@earendil-works/pi-tui": ">=0.85.0"
+  },
+  "devDependencies": {
+    "@earendil-works/pi-coding-agent": "^0.85.1",
+    "@earendil-works/pi-tui": "^0.85.1",
+    "@types/node": "^26.4.1",
+    "typescript": "^7.0.2"
+  }
 }
