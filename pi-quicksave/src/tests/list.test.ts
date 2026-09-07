@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { appendToList, MAX_PROMPTS, parseListFile, removeAt, replaceAt, serializeList } from "../list.ts";
+import { appendToList, escapeForLabel, MAX_PROMPTS, parseListFile, removeAt, replaceAt, serializeList } from "../list.ts";
 
 function entries(n: number): string[] {
 	return Array.from({ length: n }, (_, i) => `entry-${i}`);
@@ -69,6 +69,29 @@ test("parseListFile keeps only string elements", () => {
 	assert.deepEqual(parseListFile('[1, "a", null, "b"]'), ["a", "b"]);
 	assert.deepEqual(parseListFile('["a", "b"]'), ["a", "b"]);
 	assert.deepEqual(parseListFile("[]"), []);
+});
+
+test("escapeForLabel turns real line breaks into the two characters backslash-n", () => {
+	assert.equal(escapeForLabel("line1\nline2\n\nline3"), "line1\\nline2\\n\\nline3");
+});
+
+test("escapeForLabel doubles literal backslashes so a literal \\n stays readable", () => {
+	// A real newline and a literal backslash-n must not look the same.
+	assert.equal(escapeForLabel("a\nb"), "a\\nb");
+	assert.equal(escapeForLabel("a\\nb"), "a\\\\nb");
+});
+
+test("escapeForLabel normalizes CR and CRLF line endings like LF", () => {
+	assert.equal(escapeForLabel("a\r\nb"), "a\\nb");
+	assert.equal(escapeForLabel("a\rb"), "a\\nb");
+});
+
+test("escapeForLabel leaves text without line breaks or backslashes alone", () => {
+	assert.equal(escapeForLabel("plain prompt"), "plain prompt");
+});
+
+test("escapeForLabel keeps an original backslash-then-newline distinct", () => {
+	assert.equal(escapeForLabel("a\\\nb"), "a\\\\\\nb");
 });
 
 test("serializeList round-trips through parseListFile", () => {

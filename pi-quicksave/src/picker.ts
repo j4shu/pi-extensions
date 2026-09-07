@@ -3,7 +3,7 @@ import type { ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { Container, Key, matchesKey, SelectList, Text, truncateToWidth } from "@earendil-works/pi-tui";
 import type { SelectItem } from "@earendil-works/pi-tui";
 
-import { removeAt } from "./list.ts";
+import { escapeForLabel, removeAt } from "./list.ts";
 
 const FOOTER_BROWSE =
 	"up/down or ctrl+n/p move · enter fill · ctrl+x delete · ctrl+y copy · esc exit";
@@ -191,10 +191,7 @@ export async function openPromptPicker(
 	);
 }
 
-/** One-line preview of an entry: first line plus a line count suffix. */
+/** One-line preview of an entry: line breaks shown as the two characters `\n`. */
 function previewLabel(text: string): string {
-	const firstLine = text.split("\n")[0] ?? "";
-	const extraLines = text.split("\n").length - 1;
-	const label = extraLines > 0 ? `${firstLine} (+${extraLines} more)` : firstLine;
-	return truncateToWidth(label, 240);
+	return truncateToWidth(escapeForLabel(text), 240);
 }

@@ -19,6 +19,16 @@ export function appendToList(
 	return { list: next.slice(0, MAX_PROMPTS), evicted };
 }
 
+/**
+ * Escape a prompt for one-line display: backslashes are doubled first so a
+ * literal `\n` stays distinguishable, then CR/LF line endings become the two
+ * characters `\n`. The result contains no real CR or LF, so it renders as a
+ * single row.
+ */
+export function escapeForLabel(text: string): string {
+	return text.replace(/\\/g, "\\\\").replace(/\r\n?/g, "\n").replace(/\n/g, "\\n");
+}
+
 /** Copy of `list` without the entry at `index`. Out-of-range is a no-op. */
 export function removeAt(list: readonly string[], index: number): string[] {
 	if (index < 0 || index >= list.length) {
