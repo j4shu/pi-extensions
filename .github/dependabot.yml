@@ -1,7 +1,14 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
-    directory: "/"
+    directory: "/pi-quicksave"
+    schedule:
+      interval: "weekly"
+    groups:
+      earendil-works:
+        patterns: ["@earendil-works/*"]
+  - package-ecosystem: "npm"
+    directory: "/pi-rename-session"
     schedule:
       interval: "weekly"
     groups:
