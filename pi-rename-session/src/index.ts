@@ -2,20 +2,12 @@
  * Auto-name a new pi session once, after its first completed exchange, from
  * the current session model. Manual `/rename-session` regenerates the same way.
  */
-import { getAgentDir } from "@earendil-works/pi-coding-agent";
 import type {
 	ExtensionAPI,
 	ExtensionContext,
 	SessionShutdownEvent,
 	SessionStartEvent,
 } from "@earendil-works/pi-coding-agent";
-import {
-	loadConfig,
-	saveConfig,
-	REQUEST_TIMEOUT_MS,
-	TITLE_MAX_LENGTH,
-	type Config,
-} from "./config.ts";
 import {
 	buildTitlePrompt,
 	extractFirstExchange,
@@ -24,10 +16,14 @@ import {
 	type HistoryEntry,
 } from "./naming.ts";
 
+/** Fixed title length cap. */
+const TITLE_MAX_LENGTH = 48;
+/** Fixed model-call timeout. */
+const REQUEST_TIMEOUT_MS = 10_000;
 const TITLE_MAX_TOKENS = 64;
 
 interface NamingState {
-	/** This session may be auto-named (fresh conversation, unnamed, enabled). */
+	/** This session may be auto-named (fresh conversation, unnamed). */
 	armed: boolean;
 	/** Auto-naming attempted at least once for this session. */
 	attempted: boolean;
@@ -41,10 +37,9 @@ interface NamingState {
 	controller: AbortController | null;
 	/** Timer handle for the request timeout. */
 	timer: ReturnType<typeof setTimeout> | null;
-	config: Config;
 }
 
-function freshState(config: Config): NamingState {
+function freshState(): NamingState {
 	return {
 		armed: false,
 		attempted: false,
@@ -53,7 +48,6 @@ function freshState(config: Config): NamingState {
 		requestGen: -1,
 		controller: null,
 		timer: null,
-		config,
 	};
 }
 
@@ -74,18 +68,15 @@ function report(state: NamingState, ctx: ExtensionContext, level: "info" | "warn
 }
 
 export default function (pi: ExtensionAPI) {
-	const agentDir = getAgentDir();
-	let state = freshState(loadConfig(agentDir));
+	let state = freshState();
 
 	pi.on("session_start", (event: SessionStartEvent, ctx: ExtensionContext) => {
 		abortRequest(state);
-		state.config = loadConfig(agentDir);
 		const branch = ctx.sessionManager.getBranch() as unknown as HistoryEntry[];
 		// Arm only for a genuinely fresh conversation: no prior user turns and
 		// still unnamed. Resume/fork/reload with history never auto-name, and a
 		// name set via /name, --name, or another extension always wins.
-		state.armed =
-			state.config.enabled && userMessageCount(branch) === 0 && !pi.getSessionName();
+		state.armed = userMessageCount(branch) === 0 && !pi.getSessionName();
 		state.attempted = false;
 		state.succeeded = false;
 		state.generation += 1;
@@ -115,31 +106,9 @@ export default function (pi: ExtensionAPI) {
 
 	pi.registerCommand("rename-session", {
 		description:
-			"Rename session: /rename-session (regenerate from first exchange), /rename-session on|off, /rename-session status",
+			"Rename session: /rename-session (regenerate from first exchange), /rename-session status",
 		handler: async (args: string, ctx: ExtensionContext) => {
 			const arg = args.trim().toLowerCase();
-			if (arg === "on" || arg === "off") {
-				const enabled = arg === "on";
-				const next: Config = { ...state.config, enabled };
-				try {
-					saveConfig(agentDir, next);
-				} catch (err) {
-					report(
-						state,
-						ctx,
-						"error",
-						`Could not save ${agentDir}/pi-rename-session.json: ${err instanceof Error ? err.message : String(err)}`,
-					);
-					return;
-				}
-				state.config = next;
-				if (!enabled) {
-					state.armed = false;
-					abortRequest(state);
-				}
-				report(state, ctx, "info", `Auto-naming ${enabled ? "on" : "off"} (manual /rename-session still works)`);
-				return;
-			}
 			if (arg === "status") {
 				const name = pi.getSessionName();
 				report(
@@ -147,11 +116,8 @@ export default function (pi: ExtensionAPI) {
 					ctx,
 					"info",
 					[
-						`enabled: ${state.config.enabled}`,
 						`current name: ${name ?? "(none)"}`,
 						`armed: ${state.armed}, attempted: ${state.attempted}`,
-						`model: ${state.config.model ?? "(session model)"}`,
-						`config: ${agentDir}/pi-rename-session.json`,
 					].join("\n"),
 				);
 				return;
@@ -177,32 +143,8 @@ export default function (pi: ExtensionAPI) {
 		opts: { allowReplace: boolean },
 	): Promise<string | undefined> {
 		return (async () => {
-			// Naming model: config override when set and usable, else the session model.
-			let model = ctx.model;
-			const override = current.config.model;
-			if (override) {
-				const slash = override.indexOf("/");
-				const provider = slash === -1 ? "" : override.slice(0, slash);
-				const modelId = slash === -1 ? "" : override.slice(slash + 1);
-				const resolved = provider && modelId ? ctx.modelRegistry.find(provider, modelId) : undefined;
-				if (!resolved) {
-					report(
-						current,
-						ctx,
-						"warning",
-						`Naming model "${override}" not found; falling back to the session model`,
-					);
-				} else if (!ctx.modelRegistry.hasConfiguredAuth(resolved)) {
-					report(
-						current,
-						ctx,
-						"warning",
-						`Naming model "${override}" has no credentials; falling back to the session model`,
-					);
-				} else {
-					model = resolved;
-				}
-			}
+			// Name with the session's current model; no override.
+			const model = ctx.model;
 			if (!model) {
 				if (opts.allowReplace) {
 					report(current, ctx, "error", "No active session model to name with");

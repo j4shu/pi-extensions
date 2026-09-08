@@ -2,29 +2,16 @@
 
 A [pi](https://pi.dev) extension that auto-names a new session from its first exchange.
 
-| Command                      | Action                               |
-| ---------------------------- | ------------------------------------ |
-| `/rename-session`            | Regenerate the session name manually |
-| `/rename-session on` / `off` | Toggle auto-naming                   |
-| `/rename-session status`     | Show enabled state, name, config     |
+| Command                  | Action                               |
+| ------------------------ | ------------------------------------ |
+| `/rename-session`        | Regenerate the session name manually |
+| `/rename-session status` | Show name, arming status             |
 
 Auto-naming only fires on new sessions.
 
-## Config
+## Configuration
 
-`~/.pi/agent/pi-rename-session.json`:
-
-```json
-{
-  "enabled": true,
-  "model": "openai/gpt-x"
-}
-```
-
-| Key       | Meaning                                                                   |
-| --------- | ------------------------------------------------------------------------- |
-| `enabled` | Auto-naming on/off. Default `true`.                                       |
-| `model`   | Naming model override as `provider/id`. Default: the session's own model. |
+Auto-naming is always on while the extension is installed. Uninstall to disable it.
 
 ## Install
 
