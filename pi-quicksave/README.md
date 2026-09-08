@@ -17,7 +17,7 @@ Picker keyboard shortcuts:
 | `ctrl+y`                           | Copy to clipboard         |
 | `esc`                              | Close                     |
 
-Picker entries live in `~/.pi/agent/quicksave.json` sorted by newest first and capped at 100.
+Picker entries live in `~/.pi/agent/extensions/pi-quicksave.json` sorted by newest first and capped at 100.
 
 ## Install
 

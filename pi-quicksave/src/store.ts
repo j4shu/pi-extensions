@@ -9,10 +9,10 @@ import { parseListFile, serializeList } from "./list.ts";
  * Quicksaved Prompts live in one global JSON file in the pi agent dir, shared
  * across sessions and projects.
  */
-const FILE_NAME = "quicksave.json";
+const FILE_NAME = "pi-quicksave.json";
 
 function promptListPath(): string {
-	return join(getAgentDir(), FILE_NAME);
+	return join(getAgentDir(), "extensions", FILE_NAME);
 }
 
 /** Load Quicksaved Prompts. A missing or unreadable file starts empty. */
