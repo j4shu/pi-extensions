@@ -86,6 +86,9 @@ export default function (pi: ExtensionAPI) {
 		abortRequest(state);
 		state.generation += 1;
 		state.armed = false;
+		// Re-append name at EOF so tail-only session pickers find it.
+		const name = pi.getSessionName();
+		if (name) pi.setSessionName(name);
 	});
 
 	pi.on("agent_settled", async (_event, ctx: ExtensionContext) => {
