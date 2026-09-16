@@ -68,7 +68,7 @@ function report(state: NamingState, ctx: ExtensionContext, level: "info" | "warn
 }
 
 export default function (pi: ExtensionAPI) {
-	let state = freshState();
+	const state = freshState();
 
 	pi.on("session_start", (event: SessionStartEvent, ctx: ExtensionContext) => {
 		abortRequest(state);
@@ -86,15 +86,14 @@ export default function (pi: ExtensionAPI) {
 		abortRequest(state);
 		state.generation += 1;
 		state.armed = false;
-		// Re-append name at EOF so tail-only session pickers find it.
-		const name = pi.getSessionName();
-		if (name) pi.setSessionName(name);
 	});
 
 	pi.on("agent_settled", async (_event, ctx: ExtensionContext) => {
 		if (!state.armed || state.attempted || state.succeeded) return;
 		state.attempted = true;
 		state.armed = false;
+		// Already named by /name, --name, or another extension: skip the request.
+		if (pi.getSessionName()) return;
 		const branch = ctx.sessionManager.getBranch() as unknown as HistoryEntry[];
 		const exchange = extractFirstExchange(branch);
 		if (!exchange) return;
