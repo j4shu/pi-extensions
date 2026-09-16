@@ -92,7 +92,6 @@ export default function (pi: ExtensionAPI) {
 		if (!state.armed || state.attempted || state.succeeded) return;
 		state.attempted = true;
 		state.armed = false;
-		// Already named by /name, --name, or another extension: skip the request.
 		if (pi.getSessionName()) return;
 		const branch = ctx.sessionManager.getBranch() as unknown as HistoryEntry[];
 		const exchange = extractFirstExchange(branch);
