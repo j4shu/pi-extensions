@@ -1,6 +1,7 @@
 # pi-rename-session
 
-A [pi](https://pi.dev) extension that auto-names a new session from its first exchange.
+A [pi](https://pi.dev) extension that auto-names a new session from its first
+exchange.
 
 | Command                  | Action                               |
 | ------------------------ | ------------------------------------ |
@@ -11,7 +12,8 @@ Auto-naming only fires on new sessions.
 
 ## Configuration
 
-Auto-naming is always on while the extension is installed. Uninstall to disable it.
+Auto-naming is always on while the extension is installed. Uninstall to disable
+it.
 
 ## Install
 

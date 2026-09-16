@@ -1,6 +1,7 @@
 # pi-quicksave
 
-A [pi](https://pi.dev) extension to quicksave prompt inputs. Like Claude's `Ctrl-s`, but better.
+A [pi](https://pi.dev) extension to quicksave prompt inputs. Like Claude's
+`Ctrl-s`, but better.
 
 | Prompt Input | Ctrl-s                             |
 | ------------ | ---------------------------------- |
@@ -17,7 +18,8 @@ Picker keyboard shortcuts:
 | `ctrl+y`                           | Copy to clipboard         |
 | `esc`                              | Close                     |
 
-Picker entries live in `~/.pi/agent/extensions/pi-quicksave.json` sorted by newest first and capped at 100.
+Picker entries live in `~/.pi/agent/extensions/pi-quicksave.json` sorted by
+newest first and capped at 100.
 
 ## Install
 
