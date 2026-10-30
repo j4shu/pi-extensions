@@ -16,7 +16,7 @@ jobs:
       run:
         working-directory: pi-quicksave
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
@@ -32,7 +32,7 @@ jobs:
       run:
         working-directory: pi-rename-session
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
@@ -48,7 +48,7 @@ jobs:
       run:
         working-directory: pi-hud
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
